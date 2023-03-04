@@ -1,0 +1,28 @@
+{
+	"extends": [
+		"react-app",
+		"react-app/jest"
+	],
+	"rules": {
+		"no-console": "warn",
+		"quotes": [
+			"warn",
+			"single"
+		],
+		"jsx-quotes": [
+			"warn",
+			"prefer-double"
+		],
+		"prefer-const": "warn",
+		"max-len": [
+			"error",
+			{
+				"code": 120
+			}
+		],
+		"semi": [
+			"warn",
+			"never"
+		]
+	}
+}
