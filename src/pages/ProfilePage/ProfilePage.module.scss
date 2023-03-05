@@ -1,0 +1,50 @@
+.profile {
+	display: grid;
+	grid-template-columns: 4fr 8fr;
+	padding: 0 20px;
+}
+
+.profileAvatar {
+	margin-bottom: 20px;
+
+	img {
+		max-width: 200px;
+	}
+}
+
+.postItems {
+	margin-bottom: 20px;
+}
+
+.post {
+	border: 1px solid lightgray;
+	border-radius: 5px;
+	padding: 20px 20px;
+}
+
+.profileData {}
+
+.profileName {
+	margin-bottom: 20px;
+}
+
+.profileStatus {}
+
+.profileNewPost {
+	display: flex;
+	flex-direction: column;
+
+	textarea {
+		border-radius: 5px;
+		resize: none;
+		padding: 20px 20px;
+		margin-bottom: 20px;
+	}
+
+	button {
+		align-self: flex-start;
+		padding: 10px 20px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+}

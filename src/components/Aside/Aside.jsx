@@ -1,24 +1,28 @@
+import { NavLink } from 'react-router-dom'
 import styles from './Aside.module.scss'
 
-export const Aside = () => {
+export const Aside = (props) => {
+
+	const setActive = ({ isActive }) => isActive ? 'Aside_active__hwF91' : ''
+
 	return (
 		<aside className={styles.appAside}>
 			<nav>
 				<ul className={styles.navList}>
 					<li>
-						<a href="/">Front Page</a>
+						<NavLink className={setActive} to={'/'}>Front Page</NavLink>
 					</li>
 					<li>
-						<a href="/profile">Profile</a>
+						<NavLink className={setActive} to={'/profile'}>Profile</NavLink>
 					</li>
 					<li>
-						<a href="/users">Users</a>
+						<NavLink className={setActive} to={'/users'}>Users</NavLink>
 					</li>
 					<li>
-						<a href="/login">Login</a>
+						<NavLink className={setActive} to={'/login'}>Login</NavLink>
 					</li>
 					<li>
-						<a href="/dialogs">Dialogs</a>
+						<NavLink className={setActive} to={'/dialogs'}>Dialogs</NavLink>
 					</li>
 				</ul>
 			</nav>
