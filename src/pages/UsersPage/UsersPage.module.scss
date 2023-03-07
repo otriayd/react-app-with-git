@@ -1,6 +1,15 @@
 .users {
 	padding: 0 20px;
 	box-sizing: border-box;
+	position: relative;
+
+	&>img {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 1;
+	}
 }
 
 .paginationWrapper {
@@ -26,3 +35,7 @@
 }
 
 .usersItems {}
+
+.activePage {
+	color: red;
+}

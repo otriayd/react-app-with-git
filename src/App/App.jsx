@@ -4,7 +4,7 @@ import { MainLayout } from '../layouts/MainLayouts'
 import { DialogsPage } from '../pages/DialogsPage'
 import { FrontPage } from '../pages/FrontPage'
 import { ProfilePage } from '../pages/ProfilePage'
-import { UsersPage } from '../pages/UsersPage'
+import UsersPage from '../pages/UsersPage'
 import { LoginPage } from '../pages/LoginPage'
 
 

@@ -1,24 +1,36 @@
 import styles from './UsersPage.module.scss'
 import { User } from '../../components/User'
+import Loading from '../../assets/images/Loading.gif'
 
-export const UsersPage = () => {
+export const UsersPage = (props) => {
+
+	const pages = Math.ceil(props.usersTotalCount / props.pageSize)
+	const pagesElements = []
+
+	for (let i = 1; i <= pages; i++) {
+		pagesElements.push(<span
+			onClick={() => { props.onPageChanged(i) }}
+			className={i === props.pageNumber ? styles.activePage : null}
+			key={i}>{i}</span>)
+	}
+	const usersElements = props.users.map((user) => {
+		return <User
+			key={user.id}
+			userData={user}
+			followThunkCreator={props.followThunkCreator}
+			unfollowThunkCreator={props.unfollowThunkCreator}
+			isFollowing={props.isFollowing} />
+	})
+
 	return (
 		<div className={styles.users}>
 			<div className={styles.paginationWrapper}>
 				<div className={styles.pagination}>
-					<span>1</span>
-					<span>2</span>
-					<span>3</span>
-					<span>4</span>
-					<span>5</span>
+					{pagesElements}
 				</div>
 			</div>
 			<div className={styles.usersItems}>
-				<User />
-				<User />
-				<User />
-				<User />
-				<User />
+				{props.isFetching ? <img src={Loading} alt="" /> : usersElements}
 			</div>
 		</div>
 	)

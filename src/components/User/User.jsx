@@ -1,20 +1,30 @@
 import styles from './User.module.scss'
 import Avatar from '../../assets/images/Avatarka.jpg'
+import { Link } from 'react-router-dom'
+import { followThunkCreator } from '../../redux/users-reducer'
 
-export const User = () => {
+export const User = (props) => {
 	return (
 		<div className={styles.user}>
 			<div className={styles.userAvatar}>
-				<img src={Avatar} alt="" />
+				<Link to={`/profile/${props.userData.id}`}>
+					<img src={props.userData.photos.small ? props.userData.photos.small : Avatar} alt="" />
+				</Link>
 			</div>
 			<div className={styles.userName}>
-				<span>Name</span>
+				<span>{props.userData.name}</span>
 			</div>
 			<div className={styles.userAbout}>
-				About Me
+				{props.userData.status ? props.userData.status : 'Status false'}
 			</div>
 			<div className={styles.userFollowing}>
-				<button>Follow</button>
+				{!props.userData.followed
+					? <button
+						disabled={props.isFollowing.some(user => user === props.userData.id)}
+						onClick={() => { props.followThunkCreator(props.userData.id) }} >Follow</button>
+					: <button
+						disabled={props.isFollowing.some(user => user === props.userData.id)}
+						onClick={() => { props.unfollowThunkCreator(props.userData.id) }}>Unfollow</button>}
 			</div>
 		</div>
 	)
