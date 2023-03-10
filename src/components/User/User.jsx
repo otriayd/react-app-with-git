@@ -1,7 +1,6 @@
 import styles from './User.module.scss'
 import Avatar from '../../assets/images/Avatarka.jpg'
 import { Link } from 'react-router-dom'
-import { followThunkCreator } from '../../redux/users-reducer'
 
 export const User = (props) => {
 	return (

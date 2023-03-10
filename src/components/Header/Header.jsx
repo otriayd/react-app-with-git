@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import Logo from '../../assets/images/Logo.png'
 import styles from './Header.module.scss'
 
-export const Header = () => {
+export const Header = (props) => {
 	return (
 		<header className={styles.appHeader}>
 			<div className={styles.headerLogo}>
@@ -11,7 +11,7 @@ export const Header = () => {
 				</Link>
 			</div>
 			<div className={styles.headerLogin}>
-				<Link to={'/login'}>Login</Link>
+				{props.login ? props.login : <Link to={'/login'}>Login</Link>}
 			</div>
 		</header>
 	)

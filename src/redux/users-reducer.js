@@ -14,7 +14,7 @@ const initialState = {
 	pageSize: 5,
 	pageNumber: 1,
 	isFetching: false,
-	isFollowing: [2, 3, 4]
+	isFollowing: []
 }
 
 export const usersReducer = (state = initialState, action) => {
@@ -143,8 +143,6 @@ export const followThunkCreator = (userId) => {
 				if (response.data.resultCode === 0) {
 					dispatch(toggleFollowing(false, userId))
 					dispatch(followActionCreator(userId))
-				} else {
-					console.log('error')
 				}
 			})
 	}
@@ -158,8 +156,6 @@ export const unfollowThunkCreator = (userId) => {
 				if (response.data.resultCode === 0) {
 					dispatch(toggleFollowing(false, userId))
 					dispatch(unfollowActionCreator(userId))
-				} else {
-					console.log('error')
 				}
 			})
 	}

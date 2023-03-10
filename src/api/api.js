@@ -20,3 +20,21 @@ export const usersApi = {
 		return instanse.delete(BASE_URL + `/follow/${userId}`)
 	}
 }
+
+export const profileApi = {
+	getProfile: (userId) => {
+		return instanse.get(BASE_URL + `/profile/${userId}`)
+	},
+	getStatus: (userId) => {
+		return instanse.get(BASE_URL + `/profile/status/${userId}`)
+	},
+	setStatus: (status) => {
+		return instanse.put(BASE_URL + '/profile/status', { status })
+	}
+}
+
+export const authApi = {
+	authMe: () => {
+		return instanse.get(BASE_URL + '/auth/me')
+	}
+}
