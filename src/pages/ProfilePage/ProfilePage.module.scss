@@ -31,20 +31,22 @@
 .profileStatus {}
 
 .profileNewPost {
-	display: flex;
-	flex-direction: column;
+	form {
+		display: flex;
+		flex-direction: column;
 
-	textarea {
-		border-radius: 5px;
-		resize: none;
-		padding: 20px 20px;
-		margin-bottom: 20px;
-	}
+		textarea {
+			border-radius: 5px;
+			resize: none;
+			padding: 20px 20px;
+			margin-bottom: 20px;
+		}
 
-	button {
-		align-self: flex-start;
-		padding: 10px 20px;
-		border-radius: 5px;
-		cursor: pointer;
+		button {
+			align-self: flex-start;
+			padding: 10px 20px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
 	}
 }

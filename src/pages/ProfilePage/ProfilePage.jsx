@@ -1,8 +1,20 @@
 import styles from './ProfilePage.module.scss'
 import Avatar from '../../assets/images/Avatarka.jpg'
 import React from 'react'
+import { Field, reduxForm } from 'redux-form'
 
 export const ProfilePage = (props) => {
+
+	const addNewPost = (value) => {
+		props.addPostThunkCreator(value)
+	}
+
+	const postsElements = props.posts.map((post) => {
+		return <div key={post.id} className={styles.post}>
+			{post.postText}
+		</div>
+	})
+
 	return (
 		<div className={styles.profile}>
 			<div className={styles.profileData}>
@@ -18,18 +30,28 @@ export const ProfilePage = (props) => {
 			</div>
 			<div className={styles.profilePosts}>
 				<div className={styles.postItems}>
-					<div className={styles.post}>
-						Im the best
-					</div>
+					{postsElements}
 				</div>
 				<div className={styles.profileNewPost}>
-					<textarea name="" id="" cols="20" rows="5" />
-					<button>Add Post</button>
+					<ReduxAddNewPostForm onSubmit={addNewPost} />
 				</div>
 			</div>
 		</div>
 	)
 }
+
+const AdNewPostForm = (props) => {
+	return (
+		<form onSubmit={props.handleSubmit}>
+			<Field name="postText" rows="5" component={'textarea'} />
+			<button>Add Post</button>
+		</form>
+	)
+}
+
+const ReduxAddNewPostForm = reduxForm({
+	form: 'addNewPostForm'
+})(AdNewPostForm)
 
 class ProfileStatus extends React.Component {
 	state = {

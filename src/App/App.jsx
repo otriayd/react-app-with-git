@@ -4,7 +4,7 @@ import { MainLayout } from '../layouts/MainLayouts'
 import { DialogsPage } from '../pages/DialogsPage'
 import { FrontPage } from '../pages/FrontPage'
 import UsersPage from '../pages/UsersPage'
-import { LoginPage } from '../pages/LoginPage'
+import { LoginPageContainer } from '../pages/LoginPage'
 import { ProfilePageContainer } from '../pages/ProfilePage/ProfilePageContainer'
 
 
@@ -19,7 +19,7 @@ export const App = () => {
 					<Route path={'profile'} element={<ProfilePageContainer />} />
 					<Route path={'profile/:id'} element={<ProfilePageContainer />} />
 					<Route path={'dialogs'} element={<DialogsPage />} />
-					<Route path={'login'} element={<LoginPage />} />
+					<Route path={'login'} element={<LoginPageContainer />} />
 				</Route>
 			</Routes>
 

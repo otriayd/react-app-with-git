@@ -2,8 +2,15 @@ import { profileApi } from '../api/api.js'
 
 const SET_PROFILE = 'SET_PROFILE'
 const SET_STATUS = 'SET_STATUS'
+const ADD_POST = 'ADD_POST'
 
 const initialState = {
+	posts: [
+		{ id: 1, postText: 'Never give up!' },
+		{ id: 2, postText: 'Never give up!' },
+		{ id: 3, postText: 'Never give up!' },
+		{ id: 4, postText: 'Never give up!' }
+	],
 	id: null,
 	avatar: null,
 	name: null,
@@ -25,6 +32,11 @@ export const profileReducer = (state = initialState, action) => {
 				...state,
 				status: action.status
 			}
+		case ADD_POST:
+			return {
+				...state,
+				posts: [...state.posts, { ...action.postText, id: 5 }]
+			}
 		default: return state
 	}
 }
@@ -38,10 +50,23 @@ export const setProfileActionCreator = (data) => {
 	}
 }
 
+export const addPostActionCreator = (postText) => {
+	return {
+		type: ADD_POST,
+		postText
+	}
+}
+
 export const setProfileStatusActionCreator = (status) => {
 	return {
 		type: SET_STATUS,
 		status
+	}
+}
+
+export const addPostThunkCreator = (postText) => {
+	return (dispatch) => {
+		dispatch(addPostActionCreator(postText))
 	}
 }
 

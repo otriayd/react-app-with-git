@@ -36,5 +36,11 @@ export const profileApi = {
 export const authApi = {
 	authMe: () => {
 		return instanse.get(BASE_URL + '/auth/me')
+	},
+	login: (email, password, rememberMe) => {
+		return instanse.post(BASE_URL + '/auth/login', { email, password, rememberMe })
+	},
+	logout: () => {
+		return instanse.delete(BASE_URL + '/auth/login')
 	}
 }

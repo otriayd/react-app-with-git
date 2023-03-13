@@ -12,6 +12,7 @@ export const Header = (props) => {
 			</div>
 			<div className={styles.headerLogin}>
 				{props.login ? props.login : <Link to={'/login'}>Login</Link>}
+				{props.login ? <button onClick={props.logout}>logout</button> : null}
 			</div>
 		</header>
 	)

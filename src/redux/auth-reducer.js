@@ -15,16 +15,15 @@ export const authReducer = (state = initialState, action) => {
 			return {
 				...state,
 				...action.data,
-				isAuth: true
 			}
 		default: return state
 	}
 }
 
-export const setAuthDataActionCreator = (id, login, email) => {
+export const setAuthDataActionCreator = (id, login, email, isAuth) => {
 	return {
 		type: SET_AUTH_DATA,
-		data: { id, login, email }
+		data: { id, login, email, isAuth }
 	}
 }
 
@@ -34,7 +33,35 @@ export const setAuthDataThunkCreator = () => {
 			.then(response => {
 				if (response.data.resultCode === 0) {
 					const { id, login, email } = response.data.data
-					dispatch(setAuthDataActionCreator(id, login, email))
+					dispatch(setAuthDataActionCreator(id, login, email, true))
+				}
+			})
+	}
+}
+
+export const login = (formData) => {
+	return (dispatch) => {
+		authApi.login(formData.login, formData.password, formData.rememberMe)
+			.then(response => {
+				if (response.data.resultCode === 0) {
+					authApi.authMe()
+						.then(response => {
+							if (response.data.resultCode === 0) {
+								const { id, login, email } = response.data.data
+								dispatch(setAuthDataActionCreator(id, login, email, true))
+							}
+						})
+				}
+			})
+	}
+}
+
+export const logout = () => {
+	return (dispatch) => {
+		authApi.logout()
+			.then(response => {
+				if (response.data.resultCode === 0) {
+					dispatch(setAuthDataActionCreator(null, null, null, false))
 				}
 			})
 	}
