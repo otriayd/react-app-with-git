@@ -1,15 +1,15 @@
 import styles from './ProfilePage.module.scss'
 import Avatar from '../../assets/images/Avatarka.jpg'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Field, reduxForm } from 'redux-form'
 
-export const ProfilePage = (props) => {
-
+export const ProfilePage = React.memo(props => {
 	const addNewPost = (value) => {
 		props.addPostThunkCreator(value)
 	}
 
 	const postsElements = props.posts.map((post) => {
+
 		return <div key={post.id} className={styles.post}>
 			{post.postText}
 		</div>
@@ -24,7 +24,7 @@ export const ProfilePage = (props) => {
 				<div className={styles.profileName}>
 					{props.name}
 				</div>
-				<ProfileStatus
+				<ProfilePageFunctionComponent
 					status={props.status}
 					updateProfileStatusThunkCreator={props.updateProfileStatusThunkCreator} />
 			</div>
@@ -38,7 +38,7 @@ export const ProfilePage = (props) => {
 			</div>
 		</div>
 	)
-}
+})
 
 const AdNewPostForm = (props) => {
 	return (
@@ -52,6 +52,45 @@ const AdNewPostForm = (props) => {
 const ReduxAddNewPostForm = reduxForm({
 	form: 'addNewPostForm'
 })(AdNewPostForm)
+
+const ProfilePageFunctionComponent = (props) => {
+
+	const [status, setStatus] = useState(props.status)
+	const [editMode, setEditMode] = useState(false)
+
+	useEffect(() => {
+		setStatus(props.status)
+	}, [props.status])
+
+	const activateEditMode = () => {
+		setEditMode(true)
+	}
+
+	const deactivateEditMode = () => {
+		setEditMode(false)
+		props.updateProfileStatusThunkCreator(status)
+	}
+
+	const onStatusChanged = (event) => {
+		setStatus(event.target.value)
+	}
+
+	return (
+		<div onClick={activateEditMode} className={styles.profileStatus}>
+			{editMode &&
+				<input
+					autoFocus={true}
+					onBlur={deactivateEditMode}
+					type="text"
+					onChange={onStatusChanged}
+					value={status} />
+			}
+			{!editMode &&
+				<span>{props.status}</span>
+			}
+		</div>
+	)
+}
 
 class ProfileStatus extends React.Component {
 	state = {

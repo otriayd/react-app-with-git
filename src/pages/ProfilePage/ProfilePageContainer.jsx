@@ -2,10 +2,9 @@ import { connect } from 'react-redux'
 import { ProfilePage } from './ProfilePage'
 import React from 'react'
 import {
-	setProfileThunkCreator,
-	setProfileStatusThunkCreator,
 	updateProfileStatusThunkCreator,
-	addPostThunkCreator
+	addPostThunkCreator,
+	getProfileData
 } from '../../redux/profile-reducer'
 import { WithAuthRedirect } from '../../hocs/withAuthRedirect'
 import { WithRouterParams } from '../../hocs/withRouterParams'
@@ -13,16 +12,23 @@ import { compose } from 'redux'
 
 
 class ProfilePageClass extends React.Component {
+
 	componentDidMount() {
 		const id = this.props.id ? this.props.id : this.props.authId
-		this.props.setProfileThunkCreator(id)
-		this.props.setProfileStatusThunkCreator(id)
+		this.props.getProfileData(id)
+	}
+	componentDidUpdate(prevProps, prevState) {
+		if (this.props !== prevProps) {
+			const id = this.props.id ? this.props.id : this.props.authId
+			this.props.getProfileData(id)
+		}
 	}
 
 	render() {
 		return <ProfilePage {...this.props} />
 	}
 }
+
 
 const RouterParam = WithRouterParams(ProfilePageClass)
 
@@ -49,10 +55,9 @@ export const ProfilePageContainer = compose(
 	connect(mapStateToPropsForRedirect, {}),
 	WithAuthRedirect,
 	connect(mapStateToProps, {
-		setProfileThunkCreator,
-		setProfileStatusThunkCreator,
 		updateProfileStatusThunkCreator,
-		addPostThunkCreator
+		addPostThunkCreator,
+		getProfileData
 	})
 )(RouterParam)
 

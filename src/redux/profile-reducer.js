@@ -25,7 +25,8 @@ export const profileReducer = (state = initialState, action) => {
 				...state,
 				id: action.id,
 				name: action.name,
-				avatar: action.avatar
+				avatar: action.avatar,
+				status: action.status
 			}
 		case SET_STATUS:
 			return {
@@ -41,12 +42,13 @@ export const profileReducer = (state = initialState, action) => {
 	}
 }
 
-export const setProfileActionCreator = (data) => {
+export const setProfileActionCreator = (status, data) => {
 	return {
 		type: SET_PROFILE,
-		id: data.id,
-		name: data.name,
-		avatar: data.avatar
+		id: data.userId,
+		name: data.fullName,
+		avatar: data.photos.large,
+		status: status
 	}
 }
 
@@ -70,27 +72,6 @@ export const addPostThunkCreator = (postText) => {
 	}
 }
 
-export const setProfileThunkCreator = (profileId) => {
-	return (dispatch) => {
-		profileApi.getProfile(profileId)
-			.then(response => {
-				return { id: response.data.userId, name: response.data.fullName, avatar: response.data.photos.small }
-			})
-			.then(data => {
-				dispatch(setProfileActionCreator({ ...data }))
-			})
-	}
-}
-
-export const setProfileStatusThunkCreator = (userId) => {
-	return (dispatch) => {
-		profileApi.getStatus(userId)
-			.then(response => {
-				dispatch(setProfileStatusActionCreator(response.data))
-			})
-	}
-}
-
 export const updateProfileStatusThunkCreator = (newStatus) => {
 	return (dispatch) => {
 		profileApi.setStatus(newStatus)
@@ -101,6 +82,20 @@ export const updateProfileStatusThunkCreator = (newStatus) => {
 			})
 	}
 }
+
+export const getProfileData = (userId) => {
+	return (dispatch) => {
+		const status = profileApi.getStatus(userId)
+		const profileData = profileApi.getProfile(userId)
+		Promise.all([status, profileData])
+			.then(data => {
+				const [status, profileData] = data
+				dispatch(setProfileActionCreator(status.data, profileData.data))
+			})
+	}
+}
+
+
 
 
 
