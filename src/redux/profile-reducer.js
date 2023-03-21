@@ -73,20 +73,18 @@ export const addPostThunkCreator = (postText) => {
 }
 
 export const updateProfileStatusThunkCreator = (newStatus) => {
-	return (dispatch) => {
-		profileApi.setStatus(newStatus)
-			.then(response => {
-				if (response.data.resultCode === 0) {
-					dispatch(setProfileStatusActionCreator(newStatus))
-				}
-			})
+	return async (dispatch) => {
+		const response = await profileApi.setStatus(newStatus)
+		if (response.data.resultCode === 0) {
+			dispatch(setProfileStatusActionCreator(newStatus))
+		}
 	}
 }
 
 export const getProfileData = (userId) => {
-	return (dispatch) => {
-		const status = profileApi.getStatus(userId)
-		const profileData = profileApi.getProfile(userId)
+	return async (dispatch) => {
+		const status = await profileApi.getStatus(userId)
+		const profileData = await profileApi.getProfile(userId)
 		Promise.all([status, profileData])
 			.then(data => {
 				const [status, profileData] = data

@@ -1,6 +1,6 @@
 import { authApi } from '../api/api.js'
 
-const SET_AUTH_DATA = 'SET_AUTH_DATA'
+const SET_AUTH_DATA = 'otriayd-network/auth/SET_AUTH_DATA'
 
 const initialState = {
 	id: null,
@@ -28,42 +28,34 @@ export const setAuthDataActionCreator = (id, login, email, isAuth) => {
 }
 
 export const setAuthDataThunkCreator = () => {
-	return (dispatch) => {
-		authApi.authMe()
-			.then(response => {
-				if (response.data.resultCode === 0) {
-					const { id, login, email } = response.data.data
-					dispatch(setAuthDataActionCreator(id, login, email, true))
-				}
-			})
+	return async (dispatch) => {
+		const response = await authApi.authMe()
+		if (response.data.resultCode === 0) {
+			const { id, login, email } = response.data.data
+			dispatch(setAuthDataActionCreator(id, login, email, true))
+		}
 	}
 }
 
 export const login = (formData) => {
-	return (dispatch) => {
-		authApi.login(formData.login, formData.password, formData.rememberMe)
-			.then(response => {
-				if (response.data.resultCode === 0) {
-					authApi.authMe()
-						.then(response => {
-							if (response.data.resultCode === 0) {
-								const { id, login, email } = response.data.data
-								dispatch(setAuthDataActionCreator(id, login, email, true))
-							}
-						})
-				}
-			})
+	return async (dispatch) => {
+		const response = await authApi.login(formData.login, formData.password, formData.rememberMe)
+		if (response.data.resultCode === 0) {
+			const response = await authApi.authMe()
+			if (response.data.resultCode === 0) {
+				const { id, login, email } = response.data.data
+				dispatch(setAuthDataActionCreator(id, login, email, true))
+			}
+		}
 	}
 }
 
 export const logout = () => {
-	return (dispatch) => {
-		authApi.logout()
-			.then(response => {
-				if (response.data.resultCode === 0) {
-					dispatch(setAuthDataActionCreator(null, null, null, false))
-				}
-			})
+	return async (dispatch) => {
+		const response = await authApi.logout()
+		if (response.data.resultCode === 0) {
+			dispatch(setAuthDataActionCreator(null, null, null, false))
+		}
 	}
 }
 
