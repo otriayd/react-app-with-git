@@ -46,7 +46,7 @@ const mapStateToProps = (state) => {
 		avatar: state.profilePage.avatar,
 		authId: state.auth.id,
 		status: state.profilePage.status,
-		posts: state.profilePage.posts
+		posts: state.profilePage.posts,
 	}
 }
 
